@@ -19,3 +19,11 @@
 a.active hr {
     display: block;
 }
+
+/* active page on mobile menu */
+@media (max-width:640px) {
+    a.active {
+        background-color: black;
+        color: white;
+    }
+}
