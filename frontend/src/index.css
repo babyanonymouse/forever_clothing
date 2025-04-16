@@ -1,1 +1,21 @@
-@import "tailwindcss"
+/* custom font */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Prata&display=swap');
+
+/* tailwind */
+@import "tailwindcss";
+
+* {
+    font-family: Outfit;
+}
+
+/* prata */
+.prata-regular {
+    font-family: "Prata", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+/* manipulate the hr on active pages */
+a.active hr {
+    display: block;
+}
