@@ -32,7 +32,7 @@ const Collection = () => {
   };
 
   const applyFilter = () => {
-    let productsCopy = products.slice();
+    let productsCopy = [...products];
 
     if (category.length > 0) {
       productsCopy = productsCopy.filter((item) =>
@@ -46,33 +46,45 @@ const Collection = () => {
       );
     }
 
+    // sort products
+    switch (sortType) {
+      case "low-high":
+        productsCopy.sort((a, b) => a.price - b.price);
+        break;
+      case "high-low":
+        productsCopy.sort((a, b) => b.price - a.price);
+        break;
+      default:
+        break;
+    }
+
     setFilterProducts(productsCopy);
   };
 
   useEffect(() => {
     applyFilter();
-  }, [category, subCategory]);
+  }, [category, subCategory, sortType, products]);
 
-  // sort products
-  const sortProduct = () => {
-    let fpCopy = filterProducts.slice();
+  // // sort products
+  // const sortProduct = () => {
+  //   let fpCopy = [...filterProducts];
 
-    switch (sortType) {
-      case "low-high":
-        setFilterProducts(fpCopy.sort((a, b) => a.price - b.price));
-        break;
-      case "high-low":
-        setFilterProducts(fpCopy.sort((a, b) => b.price - a.price));
-        break;
-      default:
-        applyFilter();
-        break;
-    }
-  };
+  //   switch (sortType) {
+  //     case "low-high":
+  //       setFilterProducts(fpCopy.sort((a, b) => a.price - b.price));
+  //       break;
+  //     case "high-low":
+  //       setFilterProducts(fpCopy.sort((a, b) => b.price - a.price));
+  //       break;
+  //     default:
+  //       applyFilter();
+  //       break;
+  //   }
+  // };
 
-  useEffect(() => {
-    sortProduct();
-  }, [sortType]);
+  // useEffect(() => {
+  //   sortProduct();
+  // }, [sortType]);
 
   return (
     <div className="flex flex-col sm:flex-row gap-1 sm:gap-10 pt-10 border-t">
@@ -199,7 +211,7 @@ const Collection = () => {
         </div>
 
         {/* map products */}
-        <div className="grid grid-cols md:grid-cols-3 lg:grid-cols-4 gap-4 gap-y-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 gap-y-6">
           {filterProducts.map((item, index) => (
             <ProductItem
               key={index}
