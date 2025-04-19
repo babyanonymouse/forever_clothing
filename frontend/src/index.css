@@ -20,6 +20,12 @@ a.active hr {
     display: block;
 }
 
+/* hide scrollbar */
+::-webkit-scrollbar {
+    display: none;
+}
+
+
 /* active page on mobile menu */
 @media (max-width:640px) {
     a.active {
