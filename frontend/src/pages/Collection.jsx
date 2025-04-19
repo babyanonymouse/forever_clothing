@@ -65,27 +65,6 @@ const Collection = () => {
     applyFilter();
   }, [category, subCategory, sortType, products]);
 
-  // // sort products
-  // const sortProduct = () => {
-  //   let fpCopy = [...filterProducts];
-
-  //   switch (sortType) {
-  //     case "low-high":
-  //       setFilterProducts(fpCopy.sort((a, b) => a.price - b.price));
-  //       break;
-  //     case "high-low":
-  //       setFilterProducts(fpCopy.sort((a, b) => b.price - a.price));
-  //       break;
-  //     default:
-  //       applyFilter();
-  //       break;
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   sortProduct();
-  // }, [sortType]);
-
   return (
     <div className="flex flex-col sm:flex-row gap-1 sm:gap-10 pt-10 border-t">
       {/* filters | left side */}
