@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ShopContext } from "../context/ShopContext";
 import Title from "../components/Title";
-import { products } from "../assets/assets";
+import { assets, products } from "../assets/assets";
 
 const Cart = () => {
-  const { product, currency, cartItems } = useContext(ShopContext);
+  const { product, currency, cartItems, updateQuantity } =
+    useContext(ShopContext);
 
   const [cartData, setCartData] = useState([]);
 
@@ -60,7 +61,18 @@ const Cart = () => {
                   </div>
                 </div>
               </div>
-              <input type="number" min={1} defaultValue={item.quantity} className="border max-w-10 sm:max-w-20 px-1 sm:px-2 py-1"/>
+              <input
+                type="number"
+                min={1}
+                defaultValue={item.quantity}
+                className="border max-w-10 sm:max-w-20 px-1 sm:px-2 py-1"
+              />
+              <img
+                onClick={() => updateQuantity(item._id, item.size, 0)}
+                src={assets.bin_icon}
+                alt="bin_icon"
+                className="w-4 sm:w-5 cursor-pointer "
+              />
             </div>
           );
         })}
