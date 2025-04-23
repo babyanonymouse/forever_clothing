@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { ShopContext } from "./ShopContext"; // notice this now imports from the new file
 import { products } from "../assets/assets";
 import { toast } from "react-toastify";
@@ -12,29 +12,62 @@ const ShopContextProvider = ({ children }) => {
   // cart
   const [cartItems, setCartItems] = useState([]);
 
+  // const addToCart = async (itemId, size) => {
+  //   if (!size) {
+  //     toast.error("Select product Size");
+  //   }
+
+  //   let cartData = structuredClone(cartItems);
+
+  //   if (cartData[itemId]) {
+  //     if (cartData[itemId][size]) {
+  //       cartData[itemId][size] += 1;
+  //     } else {
+  //       cartData[itemId][size] = 1;
+  //     }
+  //   } else {
+  //     cartData[itemId] = {};
+  //     cartData[itemId] = 1;
+  //   }
+  //   setCartItems(cartData);
+  // };
+
   const addToCart = async (itemId, size) => {
     if (!size) {
       toast.error("Select product Size");
+      return;
     }
 
     let cartData = structuredClone(cartItems);
 
-    if (cartData[itemId]) {
-      if (cartData[itemId][size]) {
-        cartData[itemId][size] += 1;
-      } else {
-        cartData[itemId][size] = 1;
-      }
-    } else {
+    if (!cartData[itemId]) {
       cartData[itemId] = {};
-      cartData[itemId] = 1;
     }
+
+    if (cartData[itemId][size]) {
+      cartData[itemId][size] += 1;
+    } else {
+      cartData[itemId][size] = 1;
+    }
+
     setCartItems(cartData);
   };
 
-  useEffect(() => {
-    console.log(cartItems);
-  }, [cartItems]);
+  const getCartCount = () => {
+    let totalCount = 0;
+    for (const items in cartItems) {
+      for (const item in cartItems[items]) {
+        try {
+          if (cartItems[items][item] > 0) {
+            totalCount += cartItems[items][item];
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    }
+    return totalCount;
+  };
 
   const value = {
     products,
@@ -46,6 +79,7 @@ const ShopContextProvider = ({ children }) => {
     setShowSearch,
     cartItems,
     addToCart,
+    getCartCount,
   };
 
   return <ShopContext.Provider value={value}>{children}</ShopContext.Provider>;
