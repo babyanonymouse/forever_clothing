@@ -7,7 +7,7 @@ import RelatedProducts from "../components/RelatedProducts";
 const Product = () => {
   const { productId } = useParams();
 
-  const { products, currency } = useContext(ShopContext);
+  const { products, currency, addToCart } = useContext(ShopContext);
 
   const [productData, setProductData] = useState(false);
 
@@ -15,18 +15,31 @@ const Product = () => {
 
   const [size, setSize] = useState("");
 
-  const fetchProductData = async () => {
-    products.map((item) => {
-      if (item._id === productId) {
-        setProductData(item);
-        setImage(item.image[0]);
-        return null;
-      }
-    });
-  };
+  // const fetchProductData = async () => {
+  //   products.map((item) => {
+  //     if (item._id === productId) {
+  //       setProductData(item);
+  //       setImage(item.image[0]);
+  //       return null;
+  //     }
+  //   });
+  // };
+
+  // const fetchProductData = () => {
+  //   const foundProduct = products.find((item) => item._id === productId);
+  //   if (foundProduct) {
+  //     setProductData(foundProduct);
+  //     setImage(foundProduct.image[0]);
+  //   }
+  // };
 
   useEffect(() => {
-    fetchProductData();
+    // fetchProductData();
+    const foundProduct = products.find((item) => item._id === productId);
+    if (foundProduct) {
+      setProductData(foundProduct);
+      setImage(foundProduct.image[0]);
+    }
   }, [productId, products]);
 
   return productData ? (
@@ -97,7 +110,10 @@ const Product = () => {
             </div>
           </div>
 
-          <button className="cursor-pointer bg-black text-white px-8 py-3 text-sm active:bg-gray-700">
+          <button
+            onClick={() => addToCart(productData._id, size)}
+            className="cursor-pointer bg-black text-white px-8 py-3 text-sm active:bg-gray-700"
+          >
             ADD TO CART
           </button>
           <hr className="mt-8 sm:w-4/5" />
@@ -142,7 +158,9 @@ const Product = () => {
       />
     </div>
   ) : (
-    <div className="opacity-0">Loading...</div>
+    <div className="flex items-center justify-center h-screen text-gray-600 opacity-0">
+      Loading...
+    </div>
   );
 };
 
