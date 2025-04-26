@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { ShopContext } from "./ShopContext"; // notice this now imports from the new file
 import { products } from "../assets/assets";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const ShopContextProvider = ({ children }) => {
   const currency = "$";
@@ -12,25 +13,7 @@ const ShopContextProvider = ({ children }) => {
   // cart
   const [cartItems, setCartItems] = useState([]);
 
-  // const addToCart = async (itemId, size) => {
-  //   if (!size) {
-  //     toast.error("Select product Size");
-  //   }
-
-  //   let cartData = structuredClone(cartItems);
-
-  //   if (cartData[itemId]) {
-  //     if (cartData[itemId][size]) {
-  //       cartData[itemId][size] += 1;
-  //     } else {
-  //       cartData[itemId][size] = 1;
-  //     }
-  //   } else {
-  //     cartData[itemId] = {};
-  //     cartData[itemId] = 1;
-  //   }
-  //   setCartItems(cartData);
-  // };
+  const navigate = useNavigate();
 
   const addToCart = async (itemId, size) => {
     if (!size) {
@@ -75,7 +58,7 @@ const ShopContextProvider = ({ children }) => {
     setCartItems(cartData);
   };
 
-  const getCartAmount =  () => {
+  const getCartAmount = () => {
     let totalAmount = 0;
     for (const items in cartItems) {
       let itemInfo = products.find((product) => product._id === items);
@@ -88,7 +71,8 @@ const ShopContextProvider = ({ children }) => {
           console.log(error);
         }
       }
-    }return totalAmount;
+    }
+    return totalAmount;
   };
 
   const value = {
@@ -102,7 +86,9 @@ const ShopContextProvider = ({ children }) => {
     cartItems,
     addToCart,
     getCartCount,
-    updateQuantity,getCartAmount
+    updateQuantity,
+    getCartAmount,
+    navigate,
   };
 
   return <ShopContext.Provider value={value}>{children}</ShopContext.Provider>;
