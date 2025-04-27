@@ -54,6 +54,22 @@ forever_ecommerce/
 
 Contributions are welcome! Please fork the repository and submit a pull request.
 
-## License
+## Backend
 
-This project is licensed under the [MIT License](LICENSE).
+The backend for this project is built using Node.js and Express. It provides RESTful APIs for product management, user authentication, and order processing.
+
+### run the backend
+
+1. Navigate to the backend directory:
+   ```bash
+   cd backend
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the server:
+   ```bash
+   npm start server
+   ```
+4. Open your browser and navigate to `http://localhost:5000` (or the port specified in your backend configuration).
